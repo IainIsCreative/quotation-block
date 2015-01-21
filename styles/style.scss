@@ -1,0 +1,150 @@
+//Import @font-face fonts
+@import 'fonts';
+
+//Color Variables
+$light-blue: #dcf5f7;
+$light-brown: #f3efc9;
+$medium-brown: #c0944d;
+$dark-brown: #9e8e79;
+
+
+//relativeType Mixin to write font sizes and line height relatively.
+@function relativeType($target, $context) {
+	@return ($target / $context) * 1em;
+}
+
+// YOLO!!
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: $light-blue;
+	font-size: 100%;
+	line-height: relativeType(20, 16);
+	font-family: "Sorts Mill Goudy", Georgia, "Times New Roman";
+
+	//Make body tall as the window for demo purposes
+	height: 100vh;
+}
+
+/**
+*
+* fadeInDown
+*
+* Small animation to make the quotation block fade in, just for effect.
+*
+**/
+@keyframes fadeInDown {
+	0% {
+		transform: translateY(-80px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
+/**
+*
+* Container
+*
+* Simple container to hold in the quotation block.
+* Quotation block has an animation tha needs a container so it stays centred.
+* Centred for demo purposes.
+*
+**/
+.wrap {
+	max-width: 310px;
+	padding: 5px;
+
+	//Central alignment for demo purposes
+	margin: 0 auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/**
+*
+* Quotation Block
+*
+**/
+.quote {
+	position: relative;
+	color: $dark-brown;
+	padding: 45px 30px 30px 50px;
+
+	//Background color and notebook lines
+	background-color: $light-brown;
+	background-image:  repeating-linear-gradient(180deg, transparent, transparent 19px, $medium-brown 20px), linear-gradient(90deg, transparent, transparent 19px, $medium-brown 19px, $medium-brown 20px);
+	background-repeat: repeat, no-repeat;
+	background-size: 1px 20px, 20px 100%;
+
+	//Border and additional styles
+	border: 1px solid $medium-brown;
+	border-radius: 5px;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+
+	//No opacity for sake of the animation
+	opacity: 0;
+
+	//CSS Animation, duration, delay and fill-mode
+	animation: fadeInDown 1s 1s both;
+
+	/**
+	*
+	* Quote Paragraph Styles
+	*
+	* Position set to relative for pseudo elements.
+	*
+	**/
+	p {
+		position: relative;
+		margin: 0 0 18px;
+		font-weight: 200;
+
+		&:before,
+		&:after {
+			position: absolute;
+			font-size: relativeType(36, 16);
+		}
+
+		&:before {
+			content: "\201C";
+			margin: 8px 0 0 -18px;
+		}
+
+		&:after {
+			content: "\201D";
+			margin: 8px 0 0 8px;
+		}
+
+	}
+
+	/**
+	*
+	* Citation Styles
+	*
+	* Set to block with a text alignment set to the right.
+	*
+	**/
+	cite {
+		font-family: "Jenna Sue", Georgia, "Times New Roman";
+		display: block;
+		text-align: right;
+		font-size: relativeType(22, 16);
+
+		&:before {
+			content: '\2013';
+			position: relative;
+			top: -2px; //Fix positioning of dash
+			margin: 0 8px 0 0;
+		}
+	}
+}
